@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test</title>
+  <script>
+    var rate = 10;
+    //pitch
+    var PITCH_LENGTH = 105.0 * rate;
+    var PITCH_WIDTH = 68.0 * rate;
+    var PITCH_MARGIN = 5.0 * rate;
+    var CENTER_CIRCLE_R = 9.15 * rate;
+    var PENALTY_AREA_LENGTH = 16.5 * rate;
+    var PENALTY_AREA_WIDTH = 40.32 * rate;
+    var GOAL_AREA_LENGTH = 5.5 * rate;
+    var GOAL_AREA_WIDTH = 18.32 * rate;
+    var GOAL_WIDTH = 14.02 * rate;
+    var GOAL_DEPTH = 2.44 * rate;
+    var PENALTY_SPOT_DIST = 11.0 * rate;
+    var CORNER_ARC_R = 1.0 * rate;
+    //ball
+    var BALL_SIZE = 0.085 * rate * 10;
+    //player
+    var PLAYER_SIZE = 0.3 * rate;
+    var PLAYER_WIDGET_SIZE = 1.0 * rate;
+
+    function pitch() {
+      var canvas = document.getElementById('pitch');
+      var ctx = canvas.getContext('2d');
+
+      // border
+      canvas.setAttribute("width", PITCH_LENGTH + PITCH_MARGIN * 2);
+      canvas.setAttribute("height", PITCH_WIDTH + PITCH_MARGIN * 2);
+      // field
+      ctx.beginPath();
+      ctx.rect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "#060";
+      ctx.fill();
+      // Outer lines
+      // 105.0 * 68.0
+      // margin 5.0
+      ctx.rect(PITCH_MARGIN, PITCH_MARGIN, canvas.width - PITCH_MARGIN * 2, canvas.height - PITCH_MARGIN * 2);
+      ctx.lineWidth = 1;
+      ctx.strokeStyle = "#FFF";
+      ctx.stroke();
+      ctx.closePath();
+
+      ctx.fillStyle = "#FFF";
+
+      // Mid line
+      ctx.beginPath();
+      ctx.moveTo(canvas.width / 2, PITCH_MARGIN);
+      ctx.lineTo(canvas.width / 2, PITCH_MARGIN + PITCH_WIDTH);
+      ctx.stroke();
+      ctx.closePath();
+
+      //Mid circle
+      // 9.15
+      ctx.beginPath()
+      ctx.arc(canvas.width / 2, canvas.height / 2, CENTER_CIRCLE_R, 0, 2 * (Math.PI), false);
+      ctx.stroke();
+      ctx.closePath();
+      //Mid point
+      ctx.beginPath()
+      ctx.arc(canvas.width / 2, canvas.height / 2, 2, 0, 2 * Math.PI, false);
+      ctx.fill();
+      ctx.closePath();
+
+      //Home penalty box
+      // 16.5 * 40.32
+      ctx.beginPath();
+      ctx.rect(PITCH_MARGIN, canvas.height / 2 - PENALTY_AREA_WIDTH / 2, PENALTY_AREA_LENGTH, PENALTY_AREA_WIDTH);
+      ctx.stroke();
+      ctx.closePath();
+      //Home goal box
+      // 5.5 * 18.32
+      ctx.beginPath();
+      ctx.rect(PITCH_MARGIN, canvas.height / 2 - GOAL_AREA_WIDTH / 2, GOAL_AREA_LENGTH, GOAL_AREA_WIDTH);
+      ctx.stroke();
+      ctx.closePath();
+      //Home goal
+      ctx.beginPath();
+      ctx.rect(PITCH_MARGIN, canvas.height / 2 - GOAL_WIDTH / 2, - GOAL_DEPTH, GOAL_WIDTH);
+      ctx.stroke();
+      ctx.closePath();
+      //Home penalty point
+      ctx.beginPath()
+      ctx.arc(PITCH_MARGIN + PENALTY_SPOT_DIST, canvas.height / 2, 1, 0, 2 * Math.PI, true);
+      ctx.fill();
+      ctx.closePath();
+      //Home half circle
+      ctx.beginPath()
+      ctx.arc(PITCH_MARGIN + PENALTY_SPOT_DIST, canvas.height / 2, PENALTY_SPOT_DIST - 20, 0.29 * Math.PI, 1.71 * Math.PI, true);
+      ctx.stroke();
+      ctx.closePath();
+
+      //Away penalty box
+      ctx.beginPath();
+      ctx.rect(canvas.width - PITCH_MARGIN, canvas.height / 2 - PENALTY_AREA_WIDTH / 2, -PENALTY_AREA_LENGTH, PENALTY_AREA_WIDTH);
+      ctx.stroke();
+      ctx.closePath();
+      //Away goal box
+      ctx.beginPath();
+      ctx.rect(canvas.width - PITCH_MARGIN, canvas.height / 2 - GOAL_AREA_WIDTH / 2, -GOAL_AREA_LENGTH, GOAL_AREA_WIDTH);
+      ctx.stroke();
+      ctx.closePath();
+      //Away goal
+      ctx.beginPath();
+      ctx.rect(canvas.width - PITCH_MARGIN, canvas.height / 2 - GOAL_WIDTH / 2, GOAL_DEPTH, GOAL_WIDTH);
+      ctx.stroke();
+      ctx.closePath();
+      //Away penalty point
+      ctx.beginPath()
+      ctx.arc(canvas.width - PITCH_MARGIN - PENALTY_SPOT_DIST, canvas.height / 2, 1, 0, 2 * Math.PI, true);
+      ctx.fill();
+      ctx.closePath();
+      //Away half circle
+      ctx.beginPath()
+      ctx.arc(canvas.width - PITCH_MARGIN - PENALTY_SPOT_DIST, canvas.height / 2, PENALTY_SPOT_DIST - 20, 0.71 * Math.PI, 1.29 * Math.PI, false);
+      ctx.stroke();
+      ctx.closePath();
+
+      //Home L corner
+      ctx.beginPath()
+      ctx.arc(PITCH_MARGIN, PITCH_MARGIN, CORNER_ARC_R, 0, 0.5 * Math.PI, false);
+      ctx.stroke();
+      ctx.closePath();
+      //Home R corner
+      ctx.beginPath()
+      ctx.arc(PITCH_MARGIN, canvas.height - PITCH_MARGIN, CORNER_ARC_R, 0 * Math.PI, 1.5 * Math.PI, true);
+      ctx.stroke();
+      ctx.closePath();
+      //Away R corner
+      ctx.beginPath()
+      ctx.arc(canvas.width - PITCH_MARGIN, PITCH_MARGIN, 8, 0.5 * Math.PI, 1 * Math.PI, false);
+      ctx.stroke();
+      ctx.closePath();
+      //Away L corner
+      ctx.beginPath()
+      ctx.arc(canvas.width - PITCH_MARGIN, canvas.height - PITCH_MARGIN, 8, 1 * Math.PI, 1.5 * Math.PI, false);
+      ctx.stroke();
+      ctx.closePath();
+    };
+
+    socket = new WebSocket('ws://localhost:7000');
+    socket.onopen = function () {
+      console.log('connect success');
+    }
+    socket.onmessage = function () {
+      //console.log('message received', event.data);
+      const data = JSON.parse(event.data)
+      var canvas = document.getElementById('pitch')
+
+      if (data.type == "show") {
+        var ctx = canvas.getContext('2d')
+        //clear
+        //ctx.height = ctx.height
+        ctx.globalCompositeOperation = "copy";
+        pitch()
+        //ball
+        ctx.beginPath();
+        ctx.arc(data.ball.x * rate + canvas.width / 2, data.ball.y * rate + canvas.height / 2, BALL_SIZE, 0, 2 * Math.PI, true);
+        ctx.fillStyle = "#FF0000"
+        ctx.fill()
+        ctx.closePath();
+        //player
+        for (var i = 0; i < data.players.length; i++) {
+          ctx.beginPath();
+          ctx.arc(data.players[i].x * rate + canvas.width / 2, data.players[i].y * rate + canvas.height / 2, PLAYER_WIDGET_SIZE, 0, 2 * Math.PI, true)
+          if (data.players[i].side == "l") {
+            ctx.fillStyle = "#FFFF00"
+          } else {
+            ctx.fillStyle = "#00FFFF"
+          }
+          ctx.fill()
+          ctx.closePath();
+        }
+      }
+    }
+    socket.onerror = function () {
+      console.log("socket error");
+    }
+    socket.onclose = function (e) {
+      console.log('websocket 断开: ' + e.code + ' ' + e.reason + ' ' + e.wasClean)
+      console.log(e)
+    }
+    function start() {
+      socket.send('(dispstart)');
+
+    }
+    function start() {
+      socket.close();
+    }
+
+  </script>
+</head>
+
+<body onload="pitch()">
+  <button onclick="start()">start</button>
+  <button onclick="close()">close</button>
+  <canvas id="pitch">
+  </canvas>
+</body>
+
+</html>
